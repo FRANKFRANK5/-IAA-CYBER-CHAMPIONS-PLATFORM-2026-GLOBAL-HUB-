@@ -1,0 +1,144 @@
+<footer class="footer mt-5" style="border-top: 1px solid #00ff41; background: #0d0208; box-shadow: 0 -10px 30px rgba(0, 255, 65, 0.4);">
+    <div class="container text-center py-4">
+        <p style="color: #00ff41; text-shadow: 0 0 15px #00ff41; font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 1.2em;">
+            &copy; 2026 IAA CYBER-CHAMPIONS | <span style="color: #fff; text-shadow: 0 0 10px #fff;">FRANK CYBER-UNIT</span> 🛡️💎
+        </p>
+        <div style="margin-top: 10px;">
+            <small style="color: #888; letter-spacing: 2px;">
+                [ NETWORK: <span style="color: #00ff41; text-shadow: 0 0 5px #00ff41;">SECURED</span> ] 
+                [ LEVEL: <span style="color: #ffd700; text-shadow: 0 0 5px #ffd700;">WORLD CLASS</span> ] 📡
+            </small>
+        </div>
+        <small style="color: #444; display: block; margin-top: 10px; animation: blinker 1.5s linear infinite;">
+            -- OPERATIONAL BLINKING SYSTEM v3.0 --
+        </small>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Matrix Neon Buttons - Zaidi ya HackTheBox
+    document.querySelectorAll('.btn-primary, .btn-success, .btn-info').forEach(btn => {
+        btn.style.boxShadow = "0 0 20px rgba(0, 255, 65, 0.4)";
+        btn.style.border = "2px solid #00ff41";
+        btn.style.background = "rgba(0, 255, 65, 0.05)";
+        btn.style.color = "#00ff41";
+        btn.style.textTransform = "uppercase";
+        btn.style.fontWeight = "bold";
+        btn.style.letterSpacing = "1px";
+        btn.style.transition = "0.3s";
+        
+        btn.onmouseover = () => { 
+            btn.style.background = "#00ff41"; 
+            btn.style.color = "#000"; 
+            btn.style.boxShadow = "0 0 40px #00ff41";
+        };
+        btn.onmouseout = () => { 
+            btn.style.background = "rgba(0, 255, 65, 0.05)"; 
+            btn.style.color = "#00ff41"; 
+            btn.style.boxShadow = "0 0 20px rgba(0, 255, 65, 0.4)";
+        };
+    });
+
+    // 2. Podium Logic - The Hall of Fame
+    const tableRows = document.querySelectorAll('table tbody tr');
+    if (tableRows.length >= 3) {
+        const top3 = [
+            { name: tableRows[0].cells[1].innerText.trim(), score: tableRows[0].cells[2].innerText.trim() },
+            { name: tableRows[1].cells[1].innerText.trim(), score: tableRows[1].cells[2].innerText.trim() },
+            { name: tableRows[2].cells[1].innerText.trim(), score: tableRows[2].cells[2].innerText.trim() }
+        ];
+
+        const podiumHTML = `
+            <div class="podium-wrapper">
+                <h2 class="arena-title">🏆 LEADERBOARD - THE ARENA 🛡️</h2>
+                <div class="podium-container">
+                    <div class="podium-card rank-2">
+                        <div class="trophy-silver">🥈</div>
+                        <div class="winner-frame">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${top3[1].name}" class="avatar">
+                        </div>
+                        <div class="winner-name">${top3[1].name}</div>
+                        <div class="winner-tag">🥈 2nd PLACE</div>
+                        <div class="winner-points">${top3[1].score} PTS</div>
+                    </div>
+
+                    <div class="podium-card rank-1">
+                        <div class="trophy-gold">🏆</div>
+                        <div class="winner-frame-gold">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${top3[0].name}" class="avatar-gold">
+                        </div>
+                        <div class="winner-name-gold">${top3[0].name}</div>
+                        <div class="winner-tag-gold">👑 ULTIMATE CHAMPION</div>
+                        <div class="winner-points-gold">${top3[0].score} PTS</div>
+                    </div>
+
+                    <div class="podium-card rank-3">
+                        <div class="trophy-bronze">🥉</div>
+                        <div class="winner-frame">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${top3[2].name}" class="avatar">
+                        </div>
+                        <div class="winner-name">${top3[2].name}</div>
+                        <div class="winner-tag">🥉 3rd PLACE</div>
+                        <div class="winner-points">${top3[2].score} PTS</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const scoreboardHeader = document.querySelector('.container h1') || document.querySelector('.container .row:first-child');
+        if(scoreboardHeader && !document.querySelector('.podium-wrapper')) {
+             scoreboardHeader.style.display = 'none'; // Tunaficha header ya zamani
+             scoreboardHeader.insertAdjacentHTML('afterend', podiumHTML);
+        }
+    }
+});
+</script>
+
+<style>
+    /* Global Arena Styling */
+    .podium-wrapper { text-align: center; margin-bottom: 60px; }
+    .arena-title { color: #fff; text-shadow: 0 0 20px #00ff41; font-weight: 800; margin-bottom: 40px; font-size: 2.5em; }
+
+    .podium-container {
+        display: flex; justify-content: center; align-items: flex-end; gap: 30px;
+        perspective: 1000px;
+    }
+
+    .podium-card {
+        background: rgba(13, 2, 8, 0.9); border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 20px; padding: 25px; position: relative; width: 280px;
+        transition: transform 0.4s;
+    }
+    .podium-card:hover { transform: translateY(-10px) rotateX(5deg); box-shadow: 0 15px 40px rgba(0, 255, 65, 0.2); }
+
+    /* Ranks Decoration */
+    .rank-1 { border: 2px solid #ffd700; height: 420px; z-index: 10; box-shadow: 0 0 50px rgba(255, 215, 0, 0.2); }
+    .rank-2 { height: 350px; }
+    .rank-3 { height: 320px; }
+
+    /* Avatars */
+    .winner-frame { width: 100px; height: 100px; margin: 0 auto 15px; border-radius: 50%; border: 3px solid #00ff41; overflow: hidden; background: #000; }
+    .winner-frame-gold { width: 130px; height: 130px; margin: 0 auto 20px; border-radius: 50%; border: 4px solid #ffd700; overflow: hidden; background: #000; box-shadow: 0 0 20px #ffd700; }
+    .avatar { width: 100%; height: auto; }
+    .avatar-gold { width: 100%; height: auto; }
+
+    /* Typography */
+    .winner-name { color: #fff; font-weight: bold; font-size: 1.2em; margin-bottom: 5px; }
+    .winner-name-gold { color: #fff; font-weight: 900; font-size: 1.8em; text-shadow: 0 0 10px #ffd700; }
+    .winner-tag { color: #00ff41; font-size: 0.9em; font-weight: bold; }
+    .winner-tag-gold { color: #ffd700; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; }
+    .winner-points { color: #fff; font-family: 'Courier New'; font-size: 1.3em; margin-top: 10px; }
+    .winner-points-gold { color: #ffd700; font-family: 'Courier New'; font-size: 1.6em; font-weight: bold; margin-top: 10px; }
+
+    /* Trophies */
+    .trophy-gold { font-size: 60px; animation: trophy-glow 2s infinite ease-in-out; }
+    .trophy-silver, .trophy-bronze { font-size: 40px; margin-bottom: 10px; }
+
+    @keyframes trophy-glow {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px #ffd700); }
+        50% { transform: scale(1.1); filter: drop-shadow(0 0 30px #ffd700); }
+    }
+
+    @keyframes blinker { 50% { opacity: 0; } }
+</style>
