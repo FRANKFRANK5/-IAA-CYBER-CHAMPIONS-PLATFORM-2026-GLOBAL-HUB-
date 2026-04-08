@@ -1,4 +1,4 @@
-# 🛡️ IAA CYBER-CHAMPIONS PLATFORM 2026
+# 🛡️ IAA CYBER-CHAMPIONS PLATFORM 2026 | GLOBAL HUB✨
 **Lead Architect:** Frank Karani (Cyber-Unit)  
 **Location:** Institute of Accountancy Arusha (IAA), Tanzania  
 **Status:** 🟢 OPERATIONAL
@@ -6,13 +6,18 @@
 ---
 
 ## 🚀 Mission Overview
-Huu ndio mtambo mkuu wa mafunzo ya kitalamu kwa ajili ya mashindano ya **IAA Cyber-Champions 2025/26**. Platform hii imejengwa maalum kwa ajili ya kukuza vipaji vya kizalendo katika nyanja za usalama wa mtandao.
+This is the primary technical training engine for the IAA Cyber-Champions 2025/26 competition. This platform is purpose-built to cultivate homegrown talent in the field of cybersecurity.
+**To move forward with the training, which area should we focus on first?**
+
+   **Training Curriculum:** Organizing topics based on competition categories (e.g., Web Hacking, Forensics, or Cryptography).
+   **Lab Environment:** Setting up modern CTF (Capture The Flag) challenges for hands-on practice.
+   **Winning Strategies:** Developing a roadmap to help participants excel during the competition.
 
 ### 🛠️ Tech Stack & Customization
 - **Engine:** CTFd (Frank's Custom Build)
 - **UI:** Neon Matrix Green (Custom CSS/JS)
 - **Top Rank System:** Rotating Golden Crown 👑
-- **Special Features:** Capture The Flag (CTF), Forensics, Cryptography.
+- **Special Features:** Capture The Flag (CTF), Forensics, Cryptography , web,MIC, General and others.
 
 ---
 
@@ -31,7 +36,9 @@ Huu ndio mtambo mkuu wa mafunzo ya kitalamu kwa ajili ya mashindano ya **IAA Cyb
 
 ---
 
-## ⚠️ Legal Notice
-Platform hii ni kwa ajili ya mafunzo ya **Ethical Hacking** pekee. Matumizi yoyote nje ya IAA Cyber-Unit yanapaswa kufuata taratibu za kisheria za Tanzania.
+ ##⚠️ Legal Notice
+**This platform is strictly dedicated to Ethical Hacking practice and educational purposes.** 
+**All activities must be conducted within authorized environments.** 
+**Unauthorized access to systems or networks is strictly prohibited and remains a violation of professional and legal standards. 🎓💻⚖️**
 
 **Contact:** frankkarani146@gmail.com
