@@ -1,44 +1,59 @@
 import argparse
+import os
 
+# 1. Usanidi wa Argument Parser
 parser = argparse.ArgumentParser()
-parser.add_argument("--port", help="Port for debug server to listen on", default=4000)
+parser.add_argument("--port", help="Port kwa ajili ya debug server", default=4000, type=int)
 parser.add_argument(
-    "--profile", help="Enable flask_profiler profiling", action="store_true"
+    "--profile", help="Washa flask_profiler kuona utendaji (performance)", action="store_true"
 )
 parser.add_argument(
     "--disable-gevent",
-    help="Disable importing gevent and monkey patching",
-    action="store_false",
+    help="Zima gevent na monkey patching",
+    action="store_true", # Imebadilishwa kuwa true ili kulingana na jina la flag
 )
 args = parser.parse_args()
-if args.disable_gevent:
-    print(" * Importing gevent and monkey patching. Use --disable-gevent to disable.")
-    from gevent import monkey
 
-    monkey.patch_all()
+# 2. Gevent Monkey Patching (Asynchronous execution)
+# Lazima ifanyike kabla ya ku-import maktaba nyingine yoyote ya mtandao
+if not args.disable_gevent:
+    try:
+        from gevent import monkey
+        print(" * Importing gevent and monkey patching. Use --disable-gevent to disable.")
+        monkey.patch_all()
+    except ImportError:
+        print(" * Gevent haijapatikana. Inaendelea bila monkey patching...")
 
-# Import not at top of file to allow gevent to monkey patch uninterrupted
+# 3. Import CTFd App
+# Import inafanyika hapa chini ili kuruhusu gevent kufanya kazi bila kuingiliwa
 from CTFd import create_app
 
 app = create_app()
 
+# 4. Usanidi wa Profiling na Debugging (Kama umechagua --profile)
 if args.profile:
-    from flask_debugtoolbar import DebugToolbarExtension
-    import flask_profiler
+    try:
+        from flask_debugtoolbar import DebugToolbarExtension
+        import flask_profiler
 
-    app.config["flask_profiler"] = {
-        "enabled": app.config["DEBUG"],
-        "storage": {"engine": "sqlite"},
-        "basicAuth": {"enabled": False},
-        "ignore": ["^/themes/.*", "^/events"],
-    }
-    flask_profiler.init_app(app)
-    app.config["DEBUG_TB_PROFILER_ENABLED"] = True
-    app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
+        app.config["flask_profiler"] = {
+            "enabled": True,
+            "storage": {"engine": "sqlite"},
+            "basicAuth": {"enabled": False},
+            "ignore": ["^/themes/.*", "^/events"],
+        }
+        flask_profiler.init_app(app)
+        app.config["DEBUG_TB_PROFILER_ENABLED"] = True
+        app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
-    toolbar = DebugToolbarExtension()
-    toolbar.init_app(app)
-    print(" * Flask profiling running at http://0.0.0.0:4000/flask-profiler/")
+        toolbar = DebugToolbarExtension()
+        toolbar.init_app(app)
+        print(f" * Flask profiling running at http://0.0.0.0:{args.port}/flask-profiler/")
+    except ImportError:
+        print(" * Flask-Profiler au DebugToolbar hazijasakinishwa. Tumia 'pip install' kuzipata.")
 
-# MUHIMU: Tumebadilisha host kuwa 0.0.0.0 ili Codespaces iruhusu link kuonekana nje
-app.run(debug=True, threaded=True, host="0.0.0.0", port=args.port)
+# 5. Kuwasha Server
+if __name__ == "__main__":
+    print(f" * Establishing secure session on port {args.port}...")
+    # host='0.0.0.0' ni MUHIMU kwa Codespaces na ufikiaji wa nje ya mashine yako
+    app.run(debug=True, threaded=True, host="0.0.0.0", port=args.port)

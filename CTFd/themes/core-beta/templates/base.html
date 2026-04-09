@@ -1,72 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ title or Configs.ctf_name }}</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
+    <title>{{ title or Configs.ctf_name }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
 
-  {{ meta | safe }}
+    {{ meta | safe }}
 
-  {% block stylesheets %}
-    {{ Assets.css("assets/scss/main.scss") }}
-  {% endblock %}
+    {% block stylesheets %}
+        {{ Assets.css("assets/scss/main.scss") }}
+    {% endblock %}
 
-  {{ Plugins.styles }}
+    {{ Plugins.styles }}
 
-  {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
+    {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
 
-  <script type="text/javascript">
-      window.init = {
-          'urlRoot': "{{ request.script_root }}",
-          'csrfNonce': "{{ Session.nonce }}",
-          'userMode': "{{ Configs.user_mode }}",
-          'userId': {{ Session.id }},
-          'userName': {{ User.name | tojson }},
-          'userEmail': {{ User.email | tojson }},
-          'userVerified': {{ User.verified | tojson }},
-          'teamId': {{ Team.id | tojson }},
-          'teamName': {{ Team.name | tojson }},
-          'start': {{ Configs.start | tojson }},
-          'end': {{ Configs.end | tojson }},
-          'themeSettings': {{ Configs.theme_settings | tojson }},
-          'eventSounds': [
-            "/themes/core/static/sounds/notification.webm",
-            "/themes/core/static/sounds/notification.mp3",
-          ],
-      }
-  </script>
+    <script type="text/javascript">
+        window.init = {
+            'urlRoot': "{{ request.script_root }}",
+            'csrfNonce': "{{ Session.nonce }}",
+            'userMode': "{{ Configs.user_mode }}",
+            'userId': {{ Session.id }},
+            'userName': {{ User.name | tojson }},
+            'userEmail': {{ User.email | tojson }},
+            'userVerified': {{ User.verified | tojson }},
+            'teamId': {{ Team.id | tojson }},
+            'teamName': {{ Team.name | tojson }},
+            'start': {{ Configs.start | tojson }},
+            'end': {{ Configs.end | tojson }},
+            'themeSettings': {{ Configs.theme_settings | tojson }},
+            'eventSounds': [
+                "/themes/core/static/sounds/notification.webm",
+                "/themes/core/static/sounds/notification.mp3"
+            ]
+        };
+    </script>
 
-  {{ Configs.theme_header }}
+    {{ Configs.theme_header }}
 </head>
 <body>
 {% include "components/navbar.html" %}
 
 <main role="main">
-  {% block content %}
-  {% endblock %}
+    {% block content %}
+    {% endblock %}
 </main>
 
 {% include "components/snackbar.html" %}
 
-<footer class="footer">
-  <div class="container text-center">
-    <a href="https://ctfd.io" class="text-secondary">
-      <small class="text-muted">
-        {% trans %}Powered by CTFd{% endtrans %}
-      </small>
-    </a>
-  </div>
+<footer class="footer mt-5" style="border-top: 1px solid #00ff41; background: #0d0208; box-shadow: 0 -10px 30px rgba(0, 255, 65, 0.4);">
+    <div class="container text-center py-4">
+        <p style="color: #00ff41; text-shadow: 0 0 15px #00ff41; font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 1.2em;">
+            &copy; 2026 IAA CYBER-CHAMPIONS | <span style="color: #fff; text-shadow: 0 0 10px #fff;">FRANK CYBER-UNIT</span> 🛡️💎
+        </p>
+        <div style="margin-top: 10px;">
+            <small style="color: #888; letter-spacing: 2px;">
+                [ NETWORK: <span style="color: #00ff41; text-shadow: 0 0 5px #00ff41;">SECURED</span> ] 
+                [ LEVEL: <span style="color: #ffd700; text-shadow: 0 0 5px #ffd700;">WORLD CLASS</span> ] 📡
+            </small>
+        </div>
+        <small style="color: #444; display: block; margin-top: 10px; animation: blinker-small 1.5s linear infinite;">
+            -- OPERATIONAL BLINKING SYSTEM v3.0 --
+        </small>
+    </div>
 </footer>
 
 {% include "components/notifications.html" %}
 
 {% block scripts %}
-  {{ Assets.js("assets/js/page.js") }}
+    {{ Assets.js("assets/js/page.js") }}
 {% endblock %}
 
 {{ Plugins.scripts }}
-
 {{ Configs.theme_footer }}
+
+<style>
+    /* Global Arena Fixes */
+    body { background-color: #0d0208 !important; color: #00ff41 !important; font-family: 'Courier New', monospace; }
+    .podium-wrapper { text-align: center; margin-bottom: 60px; padding: 20px; animation: fadeIn 1s ease-in; }
+    .arena-title { color: #fff; text-shadow: 0 0 20px #00ff41; font-weight: 800; margin-bottom: 40px; font-size: 2.5em; text-transform: uppercase; }
+    .podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 30px; perspective: 1000px; margin-top: 40px; }
+    .podium-card { background: rgba(13, 2, 8, 0.95); border: 1px solid rgba(0, 255, 65, 0.4); border-radius: 20px; padding: 25px; position: relative; width: 280px; transition: 0.4s; }
+    .podium-card:hover { transform: translateY(-15px); box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); border-color: #00ff41; }
+    
+    .rank-1 { border: 2px solid #ffd700 !important; height: 420px; z-index: 10; box-shadow: 0 0 50px rgba(255, 215, 0, 0.2) !important; }
+    .winner-name-gold { color: #fff; font-weight: 900; font-size: 1.6em; text-shadow: 0 0 10px #ffd700; margin-top: 10px; }
+    .winner-points-gold { color: #ffd700; font-weight: bold; font-size: 1.4em; }
+    
+    @keyframes blinker-small { 50% { opacity: 0.3; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes trophy-glow { 0%, 100% { filter: drop-shadow(0 0 10px #ffd700); } 50% { filter: drop-shadow(0 0 30px #ffd700); } }
+    .trophy-gold { font-size: 60px; animation: trophy-glow 2s infinite ease-in-out; }
+    
+    /* Buttons Fix */
+    .btn-primary, .btn-success, .btn-info {
+        background: transparent !important; border: 1px solid #00ff41 !important; color: #00ff41 !important;
+        text-transform: uppercase; font-weight: bold; transition: 0.3s;
+    }
+    .btn-primary:hover { background: #00ff41 !important; color: #000 !important; box-shadow: 0 0 20px #00ff41; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tableRows = document.querySelectorAll('table tbody tr');
+    if (tableRows.length >= 3) {
+        const top3 = [
+            { name: tableRows[0].cells[1].innerText.trim(), score: tableRows[0].cells[2].innerText.trim() },
+            { name: tableRows[1].cells[1].innerText.trim(), score: tableRows[1].cells[2].innerText.trim() },
+            { name: tableRows[2].cells[1].innerText.trim(), score: tableRows[2].cells[2].innerText.trim() }
+        ];
+
+        const podiumHTML = `
+            <div class="podium-wrapper">
+                <h2 class="arena-title">🏆 THE ARENA LEADERBOARD 🛡️</h2>
+                <div class="podium-container">
+                    <div class="podium-card rank-2">
+                        <div style="font-size:40px;">🥈</div>
+                        <div class="winner-name" style="color:#fff; font-weight:bold; font-size:1.2em;">${top3[1].name}</div>
+                        <div style="color:#00ff41; font-weight:bold;">${top3[1].score} PTS</div>
+                    </div>
+                    <div class="podium-card rank-1">
+                        <div class="trophy-gold">🏆</div>
+                        <div class="winner-name-gold">${top3[0].name}</div>
+                        <div style="color:#ffd700; letter-spacing:2px; font-size:0.9em;">ULTIMATE CHAMPION</div>
+                        <div class="winner-points-gold">${top3[0].score} PTS</div>
+                    </div>
+                    <div class="podium-card rank-3">
+                        <div style="font-size:40px;">🥉</div>
+                        <div class="winner-name" style="color:#fff; font-weight:bold; font-size:1.2em;">${top3[2].name}</div>
+                        <div style="color:#00ff41; font-weight:bold;">${top3[2].score} PTS</div>
+                    </div>
+                </div>
+            </div>`;
+
+        const scoreboardHeader = document.querySelector('.container h1');
+        if(scoreboardHeader && !document.querySelector('.podium-wrapper')) {
+            scoreboardHeader.insertAdjacentHTML('afterend', podiumHTML);
+            scoreboardHeader.style.display = 'none';
+        }
+    }
+});
+</script>
 </body>
 </html>

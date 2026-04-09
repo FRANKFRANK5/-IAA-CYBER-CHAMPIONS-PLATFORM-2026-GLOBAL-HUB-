@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
+# Mpangilio wa msingi (Defaults)
 WORKERS=${WORKERS:-1}
 WORKER_CLASS=${WORKER_CLASS:-gevent}
 ACCESS_LOG=${ACCESS_LOG:--}
@@ -9,30 +10,35 @@ WORKER_TEMP_DIR=${WORKER_TEMP_DIR:-/dev/shm}
 SECRET_KEY=${SECRET_KEY:-}
 SKIP_DB_PING=${SKIP_DB_PING:-false}
 
-# Check that a .ctfd_secret_key file or SECRET_KEY envvar is set
+# 1. USALAMA: Angalia Secret Key
+# Kama una workers wengi, sessions lazima ziwe signed kwa key moja inayofanana
 if [ ! -f .ctfd_secret_key ] && [ -z "$SECRET_KEY" ]; then
-    if [ $WORKERS -gt 1 ]; then
-        echo "[ ERROR ] You are configured to use more than 1 worker."
-        echo "[ ERROR ] To do this, you must define the SECRET_KEY environment variable or create a .ctfd_secret_key file."
-        echo "[ ERROR ] Exiting..."
+    if [ "$WORKERS" -gt 1 ]; then
+        echo "----------------------------------------------------------------------"
+        echo "[ ERROR ] You are configured to use more than 1 worker ($WORKERS)."
+        echo "[ ERROR ] To do this, you must define the SECRET_KEY environment variable."
+        echo "[ ERROR ] Tip: Generate one using: python -c 'import os; print(os.urandom(16).hex())'"
+        echo "----------------------------------------------------------------------"
         exit 1
     fi
 fi
 
-# Skip db ping if SKIP_DB_PING is set to a value other than false or empty string
+# 2. DATABASE PING: Hakikisha MySQL/MariaDB imeshawaka kabisa
 if [[ "$SKIP_DB_PING" == "false" ]]; then
-  # Ensures that the database is available
+  echo "Checking database connection..."
+  # Tunatumia python ping.py iliyopo ndani ya CTFd
   python ping.py
 fi
 
-# Initialize database
+# 3. DATABASE UPGRADE: Tengeneza au sasisha table za database
+echo "Running database migrations (flask db upgrade)..."
 flask db upgrade
 
-# Start CTFd
-echo "Starting CTFd"
+# 4. START GUNICORN: Washa injini ya CTFd
+echo "Starting CTFd with $WORKERS workers..."
 exec gunicorn 'CTFd:create_app()' \
     --bind '0.0.0.0:8000' \
-    --workers $WORKERS \
+    --workers "$WORKERS" \
     --worker-tmp-dir "$WORKER_TEMP_DIR" \
     --worker-class "$WORKER_CLASS" \
     --access-logfile "$ACCESS_LOG" \

@@ -1,11 +1,67 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+    body {
+        background-color: #0d0208 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace;
+    }
+    .page-container {
+        background: rgba(26, 26, 26, 0.8);
+        border-left: 3px solid #00ff41;
+        padding: 30px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        min-height: 60vh;
+    }
+    /* Kichwa cha habari na maandishi ya ndani */
+    h1, h2, h3 {
+        color: #ffffff;
+        text-shadow: 0 0 10px #00ff41;
+        border-bottom: 1px solid #333;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    p {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    /* Kama kutakuwa na links ndani ya content */
+    .page-container a {
+        color: #00ff41;
+        text-decoration: underline;
+    }
+    .page-container a:hover {
+        color: #ffffff;
+        text-shadow: 0 0 5px #00ff41;
+    }
+    /* Kwa ajili ya orodha (lists) */
+    ul {
+        list-style-type: square;
+    }
+    li {
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
   <div class="container">
-    {{ content | safe }}
+    <div class="row">
+      <div class="col-md-10 offset-md-1 page-container">
+        {{ content | safe }}
+      </div>
+    </div>
   </div>
 {% endblock %}
 
 {% block scripts %}
   {{ Assets.js("assets/js/page.js") }}
+  <script>
+      // Kidokezo kidogo: Unaweza kuongeza 'typing effect' hapa kama unataka content ijiandike yenyewe
+      console.log("Terminal Page Initialized...");
+  </script>
 {% endblock %}

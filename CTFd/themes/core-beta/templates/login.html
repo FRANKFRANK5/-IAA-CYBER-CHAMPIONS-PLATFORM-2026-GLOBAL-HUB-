@@ -1,47 +1,149 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+    body {
+        background-color: #0d0208 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace;
+    }
+    .jumbotron {
+        background-color: rgba(0, 255, 65, 0.05) !important;
+        border-bottom: 2px solid #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        margin-bottom: 4rem;
+    }
+    h1 {
+        text-shadow: 0 0 10px #00ff41;
+        letter-spacing: 5px;
+        font-weight: bold;
+    }
+    /* Login Box */
+    .login-container {
+        background: rgba(13, 2, 8, 0.9);
+        border: 1px solid #00ff41;
+        padding: 40px;
+        box-shadow: 0 0 25px rgba(0, 255, 65, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+    /* Msitari wa juu wa kadi kwa nakshi */
+    .login-container::before {
+        content: "ACCESS TERMINAL v1.0";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #00ff41;
+        color: #000;
+        font-size: 0.7rem;
+        font-weight: bold;
+        padding: 2px 10px;
+    }
+    .form-label {
+        color: #00ff41 !important;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+    .form-control {
+        background-color: #000 !important;
+        border: 1px solid #444 !important;
+        color: #00ff41 !important;
+        border-radius: 0;
+        padding: 12px;
+    }
+    .form-control:focus {
+        border-color: #00ff41 !important;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.5) !important;
+        background-color: #050505 !important;
+    }
+    /* Buttons & Links */
+    .btn-primary {
+        background-color: transparent !important;
+        border: 1px solid #00ff41 !important;
+        color: #00ff41 !important;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: 0.3s;
+    }
+    .btn-primary:hover {
+        background-color: #00ff41 !important;
+        color: #000 !important;
+        box-shadow: 0 0 20px #00ff41;
+    }
+    .btn-secondary {
+        background-color: #1a1a1a !important;
+        border: 1px solid #444 !important;
+        color: #fff !important;
+        letter-spacing: 1px;
+    }
+    a {
+        color: #888;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: 0.3s;
+    }
+    a:hover {
+        color: #ffc107; /* Rangi ya njano kwa alerts/recovery links */
+        text-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    }
+    hr {
+        border-top: 1px solid #333;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
   <div class="jumbotron">
-    <div class="container">
+    <div class="container text-center">
       <h1>
-        {% trans %}Login{% endtrans %}
+        <i class="fas fa-terminal"></i> {% trans %}USER LOGIN{% endtrans %}
       </h1>
+      <p class="text-muted">Enter credentials to establish a secure session</p>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container mb-5">
     <div class="row">
-      <div class="col-md-8 col offset-md-2 col-lg-6 offset-lg-3">
+      <div class="col-md-8 col offset-md-2 col-lg-6 offset-lg-3 login-container">
         {% include "components/errors.html" %}
 
         {% if integrations.mlc() %}
-          <a class="btn btn-secondary btn-lg btn-block w-100" href="{{ url_for('auth.oauth_login') }}">
-            Login with Major League Cyber
+          <a class="btn btn-secondary btn-lg btn-block w-100 mb-4" href="{{ url_for('auth.oauth_login') }}">
+            <i class="fab fa-shield-alt"></i> Login via MLC Provider
           </a>
-
           <hr>
         {% endif %}
 
         {% with form = Forms.auth.LoginForm() %}
           <form method="post" accept-charset="utf-8">
-            <div class="mb-3">
+            <div class="mb-4">
               <b>{{ form.name.label(class="form-label") }}</b>
-              {{ form.name(class="form-control", value=name, autocomplete="username email") }}
+              <div class="input-group">
+                <span class="input-group-text bg-black border-secondary text-success"><i class="fas fa-user-secret"></i></span>
+                {{ form.name(class="form-control", placeholder="Username or Email", autocomplete="username email") }}
+              </div>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-4">
               <b>{{ form.password.label(class="form-label") }}</b>
-              {{ form.password(class="form-control", value=password, autocomplete="current-password") }}
+              <div class="input-group">
+                <span class="input-group-text bg-black border-secondary text-success"><i class="fas fa-key"></i></span>
+                {{ form.password(class="form-control", placeholder="********", autocomplete="current-password") }}
+              </div>
             </div>
 
-            <div class="row pt-3">
-              <div class="col-6 col-md-8">
-                <a class="align-middle" href="{{ url_for('auth.reset_password') }}">
-                  {% trans %}Forgot your password?{% endtrans %}
+            <div class="row pt-2 align-items-center">
+              <div class="col-6">
+                <a href="{{ url_for('auth.reset_password') }}">
+                  <i class="fas fa-life-ring"></i> {% trans %}Forgot password?{% endtrans %}
                 </a>
               </div>
 
-              <div class="col-6 col-md-4">
+              <div class="col-6">
                 {{ form.submit(class="btn btn-block btn-primary w-100") }}
               </div>
             </div>

@@ -1,34 +1,106 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+    body {
+        background-color: #0d0208 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace;
+    }
+    .jumbotron {
+        background-color: rgba(0, 255, 65, 0.05) !important;
+        border-bottom: 2px solid #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    }
+    h1 {
+        text-shadow: 0 0 10px #00ff41;
+        letter-spacing: 3px;
+    }
+    /* Notification Card */
+    .notification-card {
+        background: rgba(26, 26, 26, 0.9) !important;
+        border: 1px solid #333 !important;
+        border-left: 5px solid #00ff41 !important; /* Msitari wa pembeni kuashiria alert */
+        transition: all 0.3s ease;
+        border-radius: 0;
+    }
+    .notification-card:hover {
+        border-color: #00ff41 !important;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        transform: translateX(5px);
+    }
+    .card-title {
+        color: #ffffff;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 1.25rem;
+    }
+    .blockquote p {
+        color: #00ff41;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    .text-muted {
+        color: #888 !important;
+        font-size: 0.85rem;
+    }
+    /* Empty State */
+    .empty-notifications {
+        padding: 100px 0;
+        opacity: 0.5;
+    }
+    .fa-bell-slash {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-	<div class="jumbotron">
-		<div class="container">
-			<h1>
-				{% trans %}Notifications{% endtrans %}
-			</h1>
-		</div>
-	</div>
-	<div class="container">
-		{% if not notifications %}
-		<h2 class="text-center">
-			{% trans %}There are no notifications yet{% endtrans %}
-		</h2>
-		{% endif %}
-		{% for notification in notifications %}
-		<div class="card bg-body-tertiary mb-4">
-			<div class="card-body">
-				<h3 class="card-title">{{ notification.title }}</h3>
-				<blockquote class="blockquote mb-0">
-					<p>{{ notification.html }}</p>
-					<small class="text-muted"><span data-time="{{ notification.date | isoformat }}"></span></small>
-				</blockquote>
-			</div>
-		</div>
-		{% endfor %}
-	</div>
+    <div class="jumbotron">
+        <div class="container text-center">
+            <h1>
+                <i class="fas fa-bullhorn"></i> {% trans %}SYSTEM BROADCASTS{% endtrans %}
+            </h1>
+            <p class="text-muted">Real-time alerts and mission updates</p>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        {% if not notifications %}
+        <div class="text-center empty-notifications">
+            <i class="fas fa-bell-slash"></i>
+            <h2 class="text-muted">
+                {% trans %}No active transmissions at this time.{% endtrans %}
+            </h2>
+            <p>Stand by for further instructions...</p>
+        </div>
+        {% endif %}
+
+        {% for notification in notifications %}
+        <div class="card notification-card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <h3 class="card-title">
+                        <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                        {{ notification.title }}
+                    </h3>
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>
+                        <span data-time="{{ notification.date | isoformat }}"></span>
+                    </small>
+                </div>
+                <hr style="border-top: 1px solid #333;">
+                <blockquote class="blockquote mb-0">
+                    <p>{{ notification.html | safe }}</p>
+                </blockquote>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block scripts %}
   {{ Assets.js("assets/js/notifications.js") }}
 {% endblock %}
-

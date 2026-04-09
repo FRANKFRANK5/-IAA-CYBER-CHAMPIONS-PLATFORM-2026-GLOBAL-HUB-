@@ -1,44 +1,105 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+    body {
+        background-color: #0d0208 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace;
+    }
+    .jumbotron {
+        background-color: rgba(0, 255, 65, 0.05) !important;
+        border-bottom: 2px solid #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    }
+    .confirm-container {
+        background: rgba(26, 26, 26, 0.9);
+        border: 1px solid #444;
+        padding: 40px;
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
+    }
+    .status-msg {
+        border-left: 3px solid #00ff41;
+        padding-left: 20px;
+        margin-bottom: 30px;
+        text-align: left !important;
+    }
+    h5 {
+        color: #00ff41;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    .btn-primary {
+        background: transparent !important;
+        border: 1px solid #00ff41 !important;
+        color: #00ff41 !important;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .btn-primary:hover {
+        background: #00ff41 !important;
+        color: #000 !important;
+        box-shadow: 0 0 15px #00ff41;
+    }
+    .btn-secondary {
+        background: #1a1a1a !important;
+        border: 1px solid #444 !important;
+        color: #ccc !important;
+    }
+    .btn-secondary:hover {
+        border-color: #fff !important;
+        color: #fff !important;
+    }
+    hr {
+        border-top: 1px dashed #333;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
   <div class="jumbotron">
-    <div class="container">
+    <div class="container text-center">
       <h1>
-        {% trans %}Confirm{% endtrans %}
+        <i class="fas fa-user-shield"></i> {% trans %}IDENTITY VERIFICATION{% endtrans %}
       </h1>
+      <p class="text-muted">Confirm your credentials to activate your operator session</p>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container mb-5">
     <div class="row">
-      <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3">
+      <div class="col-md-10 col-lg-8 col-xl-6 offset-md-1 offset-lg-2 offset-xl-3 confirm-container">
         {% include "components/errors.html" %}
 
-        {% if request.args.get('flow') == "init" %}
-          <h5 class="text-center">
-            {% trans %}To send a confirmation email to your email address, please click the button below.{% endtrans %}
-          </h5>
-          <br>
-          <h5 class="text-center">
-            {% trans %}Please click the link in that email to confirm your account.{% endtrans %}
-          </h5>
-          <h5 class="text-center">
-            {% trans %}If the email doesn’t arrive, check your spam folder or contact an administrator to manually verify your account.{% endtrans %}
-          </h5>
-        {% else%}
-          <h5 class="text-center">
-            {% trans %}We've sent a confirmation email to your email address.{% endtrans %}
-          </h5>
-          <br>
-          <h5 class="text-center">
-            {% trans %}Please click the link in that email to confirm your account.{% endtrans %}
-          </h5>
-          <h5 class="text-center">
-            {% trans %}If the email doesn’t arrive, check your spam folder or contact an administrator to manually verify your account.{% endtrans %}
-          </h5>
-        {% endif %}
+        <div class="status-msg">
+            {% if request.args.get('flow') == "init" %}
+              <h5>
+                <i class="fas fa-info-circle text-info"></i> 
+                {% trans %}To send a confirmation email to your email address, please click the button below.{% endtrans %}
+              </h5>
+              <h5 class="mt-3">
+                {% trans %}Please click the link in that email to confirm your account.{% endtrans %}
+              </h5>
+            {% else %}
+              <h5>
+                <i class="fas fa-paper-plane text-success"></i> 
+                {% trans %}We've sent a confirmation email to your email address.{% endtrans %}
+              </h5>
+              <h5 class="mt-3">
+                {% trans %}Please click the link in that email to confirm your account.{% endtrans %}
+              </h5>
+            {% endif %}
+            
+            <p class="text-muted mt-4 small">
+              <i class="fas fa-exclamation-triangle"></i> 
+              {% trans %}If the email doesn’t arrive, check your spam folder or contact an administrator to manually verify your account.{% endtrans %}
+            </p>
+        </div>
 
-        <hr>
+        <hr class="mb-4">
 
         {% with form = Forms.auth.ConfirmForm() %}
           <form method="POST" action="{{ url_for('auth.confirm') }}">
@@ -47,8 +108,8 @@
                 {{ form.submit(class="btn btn-primary w-100 p-2") }}
               </div>
               <div class="mb-3 col-md-6">
-                <a href="{{ url_for('views.settings') }}" class="btn btn-secondary w-100 p-2">
-                  {% trans %}Change Email Address{% endtrans %}
+                <a href="{{ url_for('views.settings') }}" class="btn btn-secondary w-100 p-2 d-flex align-items-center justify-content-center">
+                  {% trans %}Change Email{% endtrans %}
                 </a>
               </div>
               {{ form.nonce() }}

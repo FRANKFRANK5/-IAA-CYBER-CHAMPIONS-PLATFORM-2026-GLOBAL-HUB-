@@ -1,19 +1,104 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+{{ super() }}
+<style>
+    body {
+        background-color: #0d0208 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace;
+    }
+    .jumbotron {
+        background-color: rgba(0, 255, 65, 0.05) !important;
+        border-bottom: 2px solid #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    }
+    h1 {
+        text-shadow: 0 0 10px #00ff41;
+        font-weight: bold;
+        letter-spacing: 3px;
+    }
+    /* Graph Container */
+    #score-graph {
+        background: rgba(26, 26, 26, 0.9);
+        border: 1px solid #00ff41;
+        border-radius: 5px;
+        margin-bottom: 2rem;
+        padding: 15px;
+    }
+    /* Table Styling */
+    .table {
+        color: #00ff41 !important;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+    .table thead th {
+        border: none;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .table tbody tr {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        transition: all 0.3s ease;
+    }
+    .table tbody tr:hover {
+        background-color: rgba(0, 255, 65, 0.1) !important;
+        transform: scale(1.01);
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+    }
+    .table td, .table th {
+        border: none !important;
+        padding: 15px !important;
+    }
+    /* Links & Badges */
+    a {
+        color: #00ff41 !important;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    a:hover {
+        color: #ffffff !important;
+        text-shadow: 0 0 5px #00ff41;
+    }
+    .badge.bg-secondary {
+        background-color: #00ff41 !important;
+        color: #000 !important;
+    }
+    /* Tabs/Pills */
+    .nav-pills .nav-link {
+        color: #00ff41 !important;
+        border: 1px solid #00ff41;
+        margin: 5px;
+    }
+    .nav-pills .nav-link.active {
+        background-color: #00ff41 !important;
+        color: #000 !important;
+        box-shadow: 0 0 15px #00ff41;
+    }
+    .spinner {
+        color: #00ff41 !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
   <div class="jumbotron">
-    <div class="container">
+    <div class="container text-center">
       <h1>
-        {% trans %}Scoreboard{% endtrans %}
+        <i class="fas fa-chart-line"></i> {% trans %}LIVE SCOREBOARD{% endtrans %}
       </h1>
+      <small class="text-muted">Real-time status of the cyber operations</small>
     </div>
   </div>
+
   <div class="container">
     {% include "components/errors.html" %}
 
     <div id="score-graph" class="align-items-center" :class="{'d-flex': show, 'd-none': !show}" x-data="ScoreboardDetail" x-ref="scoregraph" @bracket-change.window="activeBracket=$event.detail; update();">
       <div class="col-md-12 text-center">
         <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+        <p class="mt-2">Decrypting Graph Data...</p>
       </div>
     </div>
 
@@ -21,7 +106,9 @@
       <template x-if="brackets.length && standings.length">
         <div class="col-md-12 py-3">
           <nav class="nav nav-pills nav-fill">
-            <button :class="{'nav-link': true, 'active': !activeBracket}" @click="activeBracket=null">{% trans %}All{% endtrans %}</button>
+            <button :class="{'nav-link': true, 'active': !activeBracket}" @click="activeBracket=null">
+                <i class="fas fa-users"></i> {% trans %}All Sectors{% endtrans %}
+            </button>
             <template x-for="bracket in brackets">
               <button :class="{'nav-link': true, 'active': activeBracket == bracket.id}" x-text="bracket.name" @click="activeBracket=bracket.id"></button>
             </template>
@@ -30,34 +117,41 @@
       </template>
 
       <div class="col-md-12" x-show="standings.length">
-        <table class="table table-striped align-middle">
+        <table class="table align-middle">
           <thead>
-          <tr>
-            <th style="width: 10px">{% trans %}Place{% endtrans %}</th>
-            <th class="text-start ps-3">{{ get_mode_as_word(capitalize=True) }}</th>
-            <th>{% trans %}Score{% endtrans %}</th>
-          </tr>
+            <tr>
+              <th style="width: 80px" class="text-center">{% trans %}Rank{% endtrans %}</th>
+              <th class="text-start ps-3"><i class="fas fa-user-secret"></i> {{ get_mode_as_word(capitalize=True) }}</th>
+              <th class="text-center"><i class="fas fa-trophy"></i> {% trans %}Score{% endtrans %}</th>
+            </tr>
           </thead>
 
           <tbody>
             <template x-for="(standing, index) in standings.filter(i => activeBracket ? i.bracket_id==activeBracket : true)">
-              <tr>
-                <th scope="row" class="text-center" x-text="index + 1"></th>
+              <tr :style="index < 3 ? 'border-left: 4px solid #00ff41' : ''">
+                <th scope="row" class="text-center">
+                   <span x-text="index + 1" :class="index < 3 ? 'h4' : ''"></span>
+                </th>
                 <td class="text-start">
                   <a :href="standing.account_url" x-text="standing.name"></a>
                   <template x-if="standing.bracket_name">
                     <span class="badge bg-secondary ms-2" x-text="standing.bracket_name"></span>
                   </template>
                 </td>
-                <td x-text="standing.score"></td>
+                <td class="text-center">
+                    <strong x-text="standing.score"></strong>
+                </td>
               </tr>
             </template>
           </tbody>
         </table>
       </div>
 
-      <div class="col-md-12" x-show="! standings.length">
-        <h3 class="text-center text-muted">{% trans %}Scoreboard is empty{% endtrans %}</h3>
+      <div class="col-md-12 mt-5" x-show="! standings.length">
+        <div class="card bg-dark border-danger p-5 text-center">
+            <h3 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {% trans %}No Data Detected on Radar{% endtrans %}</h3>
+            <p class="text-muted">Waiting for the first solve...</p>
+        </div>
       </div>
     </div>
   </div>

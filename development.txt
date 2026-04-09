@@ -1,16 +1,31 @@
+# ==========================================================
+# DEVELOPMENT REQUIREMENTS - CTFd Project (IAA Arusha)
+# ==========================================================
+
+# Core Requirements Link
 -r requirements.txt
-pip-tools==5.4.0
-pytest==7.3.1
-pytest-randomly==3.12.0
-coverage==7.2.3
-psycopg2-binary==2.9.6
-moto==4.1.11
-bandit==1.6.2
-flask_profiler==1.8.1
-pytest-xdist==3.2.1
-pytest-cov==4.0.0
-sphinx_rtd_theme==0.4.3
-flask-debugtoolbar==0.11.0
-Faker==4.1.0
-pipdeptree==2.2.0
-pytest-sugar==0.9.7
+
+# --- Dependency Management ---
+pip-tools==5.4.0         # Inasaidia kupanga na kufunga (pin) versions za maktaba
+pipdeptree==2.2.0        # Inaonyesha mti wa jinsi maktaba zinavyotegemeana
+
+# --- Testing Framework ---
+pytest==7.3.1            # Injini kuu ya kufanya majaribio (Testing)
+pytest-randomly==3.12.0  # Inabadilisha mpangilio wa tests kuzuia utegemezi
+pytest-xdist==3.2.1      # Inaruhusu kurun tests nyingi kwa mpigo (Parallel)
+pytest-sugar==0.9.7      # Inafanya muonekano wa tests kuwa mzuri zaidi (Progress bar)
+Faker==4.1.0             # Inatengeneza data za uongo (Names, Emails) kwa ajili ya tests
+
+# --- Code Coverage & Quality ---
+coverage==7.2.3          # Inakagua ni asilimia ngapi ya kodi imefanyiwa majaribio
+pytest-cov==4.0.0        # Inaunganisha pytest na coverage tool
+bandit==1.6.2            # MUHIMU: Inakagua usalama wa kodi (Security Linter)
+
+# --- Debugging & Performance Monitoring ---
+flask_profiler==1.8.1    # Inachambua endpoint zipo zina mzigo mkubwa (Lagging)
+flask-debugtoolbar==0.11.0 # Inaongeza upau wa pembeni (sidebar) kwa ajili ya debug
+psycopg2-binary==2.9.6   # Driver ya database (kama unatumia PostgreSQL badala ya MySQL)
+
+# --- Documentation & Mocking ---
+sphinx_rtd_theme==0.4.3  # Muonekano wa nyaraka za kitalamu (ReadTheDocs theme)
+moto==4.1.11             # Inatumika ku-mock (kuiga) huduma za AWS kwa majaribio
