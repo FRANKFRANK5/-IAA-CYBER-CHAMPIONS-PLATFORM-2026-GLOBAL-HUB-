@@ -353,5 +353,37 @@ body {
 .jumbotron {
     background: rgba(0, 20, 0, 0.7) !important; /* Inafanya maandishi yaonekane vizuri */
     border: 1px solid #00ff41;
-}
+  }
+<script>
+    function forceYellow() {
+        // Badilisha rangi ya maandishi yote kuwa Yellow
+        const elements = document.querySelectorAll('h1, h2, h3, h4, th, td, a, span, .text-muted, text');
+        elements.forEach(el => {
+            el.style.setProperty('color', '#FFD700', 'important');
+            el.style.setProperty('fill', '#FFD700', 'important'); // Kwa ajili ya Grafu
+            el.style.setProperty('text-shadow', '0 0 5px rgba(255, 215, 0, 0.5)', 'important');
+        });
+
+        // Rekebisha background ya grafu iwe nyeusi zaidi ili ionekane
+        const chart = document.getElementById('scoreboard-chart');
+        if (chart) {
+            chart.style.setProperty('background-color', 'rgba(0,0,0,0.9)', 'important');
+            chart.style.setProperty('border', '2px solid #FFD700', 'important');
+        }
+    }
+
+    // Run kila baada ya sekunde 1 ili hata data mpya ikija iwe Yellow
+    setInterval(forceYellow, 1000);
+    window.onload = forceYellow;
+</script>
+
+<style>
+    /* CSS ya ziada ya kulazimisha */
+    * {
+        border-color: rgba(255, 215, 0, 0.3) !important;
+    }
+    #scoreboard thead th, #scoreboard tbody tr td {
+        color: #FFD700 !important;
+    }
+</style>
 </style>
