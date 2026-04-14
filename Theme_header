@@ -387,3 +387,79 @@ body {
     }
 </style>
 </style>
+
+
+#########################################################ongezea iiii hapa chini
+
+<style>
+/* --- FRANK'S ULTIMATE DUAL-TONE ARENA (GREEN & YELLOW) --- */
+
+/* 1. BACKGROUND & DUNIA */
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88)), 
+                url('https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png') !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-color: #0d0208 !important;
+    color: #00ff41 !important;
+    font-family: 'Courier New', Courier, monospace !important;
+}
+
+/* 2. MAANDISHI YA CHALLENGES NA KATEGORIA (YOTE GREEN) */
+.challenge-card, .category-header, .challenge-name, .challenge-desc, p, li, span {
+    color: #00ff41 !important;
+    text-shadow: 0 0 8px rgba(0, 255, 65, 0.4) !important;
+}
+
+/* 3. VICHWA VYA HABARI NA SCOREBOARD (YOTE YELLOW) */
+h1, h2, h3, h4, 
+.navbar-brand, 
+#scoreboard thead th, 
+#scoreboard tbody tr td:last-child, 
+.winner-points, .winner-name {
+    color: #FFD700 !important;
+    text-shadow: 0 0 12px #FFD700 !important;
+    text-transform: uppercase !important;
+}
+
+/* 4. NAMBA ZA RANK NA GRAFU (YELLOW KUNG'AA) */
+#scoreboard tbody tr td:first-child, 
+.plotly .ticktext, .plotly .xtick text, .plotly .ytick text, text {
+    fill: #FFD700 !important;
+    color: #FFD700 !important;
+    font-weight: bold !important;
+}
+
+/* 5. USER LINKS (GREEN YA KISASA) */
+#scoreboard tbody tr td a, .challenge-button {
+    color: #00ff41 !important;
+    border: 1px solid #00ff41 !important;
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+    text-decoration: none !important;
+}
+
+/* 6. BOX LA GRAFU NA CHALLENGE CARDS */
+#scoreboard-chart, .challenge-card {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    border: 2px solid #00ff41 !important;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2) !important;
+}
+
+/* 7. KADI ZA WASHINDI (PODIUM) */
+.podium-card {
+    border: 2px solid #FFD700 !important;
+    background: rgba(0, 20, 0, 0.9) !important;
+}
+</style>
+
+<script>
+    // Inahakikisha rangi mbili tu zinatawala kila sekunde
+    function applyDualTone() {
+        document.querySelectorAll('a, .challenge-name').forEach(el => el.style.color = '#00ff41');
+        document.querySelectorAll('.score-column, th').forEach(el => el.style.color = '#FFD700');
+    }
+    setInterval(applyDualTone, 1000);
+</script>
