@@ -38,12 +38,6 @@ def secure_admin_setup():
             print(f"[+] Akaunti mpya ya ADMIN imetengenezwa kwa: {email}")
 
 if __name__ == "__main__":
-    # Tekeleza ulinzi wa akaunti
+    # Tekeleza ulinzi wa akaunti pekee
     secure_admin_setup()
-    
-    print("--- [ LOGS ] ---")
-    print("Starting CTFd Development Server...")
-    print("Access locally at http://0.0.0.0:4000")
-    
-    # Inawaka kwenye debug mode kwa ajili ya maendeleo (Development)
-    app.run(debug=True, threaded=True, host="0.0.0.0", port=4000)
+    print("[*] Usanidi wa akaunti ya ADMIN umekamilika kikamilifu kwenye Database!")
