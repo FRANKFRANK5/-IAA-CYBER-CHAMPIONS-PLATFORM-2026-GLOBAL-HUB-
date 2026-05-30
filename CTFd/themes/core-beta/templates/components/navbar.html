@@ -1,1 +1,52 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208; border-bottom: 2px solid #00ff41;">
+    <div class="container">
+        <a class="navbar-brand" href="/" style="color: #00ff41; text-shadow: 0 0 10px #00ff41; font-weight: bold;">
+            ⚡ IAA CYBER CHAMPIONS
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">🏠 HOME</a>
+                </li>
+                
+                <!-- RAHISI: Check if user is logged in using CTFd's built-in method -->
+                {% if authed() %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/challenges">⚔️ CHALLENGES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/scoreboard">📊 SCOREBOARD</a>
+                    </li>
+                    
+                    {% if is_admin() %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" style="color: #ff003c;">👑 ADMIN</a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">🚪 LOGOUT</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">📝 REGISTER</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">🔐 LOGIN</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<style>
+    body { padding-top: 80px; }
+    .nav-link { transition: all 0.3s ease; margin: 0 5px; color: #fff !important; }
+    .nav-link:hover { color: #00ff41 !important; transform: translateY(-2px); }
+</style>
