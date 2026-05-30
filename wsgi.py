@@ -32,6 +32,12 @@ logger = logging.getLogger(__name__)
 app = create_app()
 
 # =========================================================================
+# 🔒 LAZIMISHA ULINZI WA COOKIES TAYARI KWA MAZINGIRA YA RENDER (HTTPS)
+# =========================================================================
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+
+# =========================================================================
 # 🔒 RATE LIMITING CONFIGURATION - Anti Brute Force
 # =========================================================================
 if HAS_LIMITER:
@@ -131,7 +137,7 @@ def list_admins():
         return admins
 
 # =========================================================================
-# 🚀 RUN ON STARTUP
+# 🚀 RUN ON STARTUP (Inatekelezwa na Gunicorn Mtandaoni)
 # =========================================================================
 try:
     logger.info("=" * 50)
