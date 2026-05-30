@@ -1,216 +1,52 @@
-/* =========================================
-   LOGIN PAGE FIX - CTFd Default Elements
-   ========================================= */
+{% extends "base.html" %}
 
-/* Login Container */
-.auth-container {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 30px;
-    background: rgba(13, 2, 8, 0.95);
-    border: 2px solid #00ff41;
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
-}
+{% block content %}
+<div class="jumbotron homepage-jumbotron" style="background: rgba(13, 2, 8, 0.95); border: 2px solid #00ff41; border-radius: 15px; padding: 60px 30px; margin-top: 40px; box-shadow: 0 0 30px rgba(0, 255, 65, 0.2); text-align: center;">
+    <div class="container">
+        <!-- Neon Header -->
+        <h1 style="color: #00ff41; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 3px; font-size: 3rem; margin-bottom: 20px;">
+            IAA CYBER CHAMPIONS
+        </h1>
+        <h3 style="color: #fff; text-shadow: 0 0 5px #00ff41; font-family: 'Courier New', monospace; margin-bottom: 30px; letter-spacing: 1px;">
+            GLOBAL HUB & FINTECH SECURITY ARENA
+        </h3>
+        
+        <!-- Pitch Paragraph -->
+        <p style="color: #00ff41; font-family: 'Courier New', monospace; font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px auto; line-height: 1.8; border-left: 3px solid #00ff41; padding-left: 20px; text-align: left;">
+            Welcome to Africa's premier gamified cybersecurity training platform. Engineered specifically for the Fintech ecosystem, we simulate real-world financial vectors, API vulnerabilities, and infrastructure exploits. Defend systems, capture flags, and secure the future of digital finance.
+        </p>
 
-/* Form Input Fields */
-.form-control {
-    background: #0d0208 !important;
-    border: 1px solid #00ff41 !important;
-    color: #00ff41 !important;
-    font-family: 'Courier New', monospace;
-    padding: 12px 15px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
+        <!-- CTA Buttons like HackTheBox -->
+        <div class="action-buttons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success btn-lg" style="border: 2px solid #00ff41; color: #00ff41; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 15px 35px; transition: 0.3s; box-shadow: 0 0 10px rgba(0,255,65,0.3);" onmouseover="this.style.background='#00ff41'; this.style.color='#0d0208'; this.style.boxShadow='0 0 25px #00ff41'" onmouseout="this.style.background='transparent'; this.style.color='#00ff41'; this.style.boxShadow='0 0 10px rgba(0,255,65,0.3)'">
+                Initialize Hack (Register)
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-success btn-lg" style="background: #00ff41; border: 2px solid #00ff41; color: #0d0208; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 15px 35px; transition: 0.3s; box-shadow: 0 0 15px #00ff41;" onmouseover="this.style.background='transparent'; this.style.color='#00ff41'; this.style.boxShadow='0 0 25px #00ff41'" onmouseout="this.style.background='#00ff41'; this.style.color='#0d0208'; this.style.boxShadow='0 0 15px #00ff41'">
+                Access Console (Login)
+            </a>
+        </div>
+    </div>
+</div>
 
-.form-control:focus {
-    box-shadow: 0 0 15px #00ff41 !important;
-    border-color: #00ff41 !important;
-    background: #0a0305 !important;
-}
-
-.form-control::placeholder {
-    color: #00ff4133;
-    font-family: 'Courier New', monospace;
-}
-
-/* Labels */
-.form-group label,
-.form-label {
-    color: #00ff41;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.85rem;
-}
-
-/* CTFd Default Buttons */
-.btn {
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 25px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background: #00ff41 !important;
-    border: 2px solid #00ff41 !important;
-    color: #0d0208 !important;
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-}
-
-.btn-primary:hover {
-    background: transparent !important;
-    color: #00ff41 !important;
-    box-shadow: 0 0 20px #00ff41;
-    transform: scale(1.02);
-}
-
-.btn-secondary {
-    background: transparent !important;
-    border: 2px solid #888 !important;
-    color: #888 !important;
-}
-
-.btn-secondary:hover {
-    border-color: #00ff41 !important;
-    color: #00ff41 !important;
-    box-shadow: 0 0 10px #00ff41;
-}
-
-.btn-danger {
-    background: transparent !important;
-    border: 2px solid #ff003c !important;
-    color: #ff003c !important;
-}
-
-.btn-danger:hover {
-    background: #ff003c !important;
-    color: #0d0208 !important;
-    box-shadow: 0 0 20px #ff003c;
-}
-
-/* Login Card */
-.card {
-    background: rgba(13, 2, 8, 0.9) !important;
-    border: 1px solid #00ff41 !important;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
-}
-
-.card-header {
-    background: rgba(0, 20, 0, 0.8) !important;
-    border-bottom: 1px solid #00ff41 !important;
-    color: #00ff41 !important;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.card-header h1, 
-.card-header h3,
-.card-header h4 {
-    color: #00ff41 !important;
-    margin: 0;
-}
-
-/* Alert Messages */
-.alert {
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-}
-
-.alert-info {
-    background: rgba(0, 255, 65, 0.1) !important;
-    border: 1px solid #00ff41 !important;
-    color: #00ff41 !important;
-}
-
-.alert-warning {
-    background: rgba(255, 215, 0, 0.1) !important;
-    border: 1px solid #ffd700 !important;
-    color: #ffd700 !important;
-}
-
-/* Checkbox */
-.custom-control-label {
-    color: #888;
-    font-family: 'Courier New', monospace;
-}
-
-.custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #00ff41 !important;
-    border-color: #00ff41 !important;
-}
-
-/* Links */
-a {
-    color: #00ff41;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-a:hover {
-    color: #fff;
-    text-shadow: 0 0 5px #00ff41;
-}
-
-/* Register/Login specific containers */
-.auth-form {
-    padding: 20px;
-}
-
-.auth-form .form-group {
-    margin-bottom: 20px;
-}
-
-/* Password Reset */
-.forgot-password {
-    text-align: right;
-    margin-top: 10px;
-}
-
-.forgot-password a {
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.forgot-password a:hover {
-    color: #00ff41;
-}
-
-/* Validation Errors */
-.invalid-feedback {
-    color: #ff003c;
-    font-family: 'Courier New', monospace;
-    font-size: 0.8rem;
-}
-
-.form-control.is-invalid {
-    border-color: #ff003c !important;
-}
-
-/* Responsive Login */
-@media (max-width: 576px) {
-    .auth-container {
-        margin: 20px;
-        padding: 20px;
-    }
-    
-    .btn {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    
-    .forgot-password {
-        text-align: center;
-        margin-top: 15px;
-    }
-}
+<!-- Features Section (Why Fintech Security?) -->
+<div class="row" style="margin-top: 50px; margin-bottom: 50px; font-family: 'Courier New', monospace;">
+    <div class="col-md-4" style="margin-bottom: 20px;">
+        <div style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0,10,0,0.6); height: 100%;">
+            <h4 style="color: #fff; font-weight: bold;">⚡ Real-World Simulations</h4>
+            <p style="color: #888; font-size: 0.95rem; margin-top: 10px;">Hands-on CTF challenges modeled after real attacks on mobile money, banking APIs, and ledger systems.</p>
+        </div>
+    </div>
+    <div class="col-md-4" style="margin-bottom: 20px;">
+        <div style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0,10,0,0.6); height: 100%;">
+            <h4 style="color: #fff; font-weight: bold;">🏆 Fintech Talent Assessment</h4>
+            <p style="color: #888; font-size: 0.95rem; margin-top: 10px;">A specialized platform for financial institutions to vet, train, and test their defense teams against top-tier threats.</p>
+        </div>
+    </div>
+    <div class="col-md-4" style="margin-bottom: 20px;">
+        <div style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0,10,0,0.6); height: 100%;">
+            <h4 style="color: #fff; font-weight: bold;">🔒 Advanced Telemetry</h4>
+            <p style="color: #888; font-size: 0.95rem; margin-top: 10px;">Live scoreboard podium tracking vulnerabilities patched and malicious flags captured in real time.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
