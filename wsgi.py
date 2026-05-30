@@ -1,10 +1,22 @@
 import os
 import logging
 import sys
+from flask import request, jsonify
 from CTFd import create_app
 from CTFd.models import Users, db
 from CTFd.utils.crypto import hash_password
 from sqlalchemy.exc import SQLAlchemyError
+
+# =========================================================================
+# 🔒 TABAKA LA USALAMA: BRUTE FORCE & ANTI-INTRUDER PROTECTION (OWASP TOP 10)
+# =========================================================================
+try:
+    from flask_limiter import Limiter
+    from flask_limiter.util import get_remote_address
+    HAS_LIMITER = True
+except ImportError:
+    HAS_LIMITER = False
+    print("[!] Flask-Limiter not installed. Install with: pip install Flask-Limiter==3.5.0")
 
 # Setup logging
 logging.basicConfig(
@@ -16,8 +28,59 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Create CTFd app
 app = create_app()
 
+# =========================================================================
+# 🔒 RATE LIMITING CONFIGURATION - Anti Brute Force
+# =========================================================================
+if HAS_LIMITER:
+    # Function to get real client IP behind Render proxy
+    def get_real_ip():
+        """Get real client IP address even behind reverse proxy (Render.com)"""
+        # Check for Cloudflare/Render proxy headers
+        if request.headers.get('X-Forwarded-For'):
+            return request.headers.get('X-Forwarded-For').split(',')[0].strip()
+        if request.headers.get('X-Real-IP'):
+            return request.headers.get('X-Real-IP')
+        return request.remote_addr
+    
+    # Initialize limiter
+    limiter = Limiter(
+        key_func=get_real_ip,  # Use real IP, not proxy IP
+        app=app,
+        default_limits=["500 per day", "100 per hour"],
+        storage_uri="memory://",  # Use memory storage (works on Render)
+        strategy="fixed-window"  # Fixed window strategy
+    )
+    
+    # 🛑 RATE LIMITS FOR LOGIN ENDPOINT
+    # Allow only 5 login attempts per minute per IP
+    @app.before_request
+    def apply_rate_limits():
+        if request.endpoint == 'auth.login' and request.method == 'POST':
+            # Create a dynamic limit
+            limit = limiter.shared_limit("5 per minute", scope="login")
+            # Apply the limit
+            limit(lambda: None)()
+    
+    # Custom error handler for rate limit exceeded
+    @app.errorhandler(429)
+    def rate_limit_handler(e):
+        logger.warning(f"[!] Rate limit exceeded for IP: {get_real_ip()}")
+        return jsonify({
+            'error': 'Too many requests. Please try again later.',
+            'message': 'Rate limit exceeded. Maximum 5 attempts per minute.'
+        }), 429
+    
+    logger.info("[✓] Anti-Brute Force Layer (Flask-Limiter) activated successfully.")
+    logger.info("[✓] Login rate limit: 5 attempts per minute per IP address")
+else:
+    logger.warning("[!] Flask-Limiter is NOT active. Add 'Flask-Limiter==3.5.0' to requirements.txt")
+
+# =========================================================================
+# 👑 ADMIN SETUP FUNCTION
+# =========================================================================
 def secure_admin_setup():
     """
     Usanidi salama wa akaunti ya ADMIN kwa CTFd platform.
@@ -25,7 +88,7 @@ def secure_admin_setup():
     """
     with app.app_context():
         try:
-            # Tunavuta siri kutoka kwenye mazingira (Environment Variables)
+            # Get environment variables
             email = os.environ.get("ADMIN_EMAIL")
             username = os.environ.get("ADMIN_USERNAME")
             password = os.environ.get("ADMIN_PASS")
@@ -73,7 +136,7 @@ def secure_admin_setup():
                     email=email,
                     password=hash_password(password),
                     type="admin",
-                    verified=True,  # Auto-verify admin
+                    verified=True,
                     hidden=False
                 )
                 db.session.add(new_admin)
@@ -90,6 +153,9 @@ def secure_admin_setup():
             logger.error(f"[-] Unexpected error during admin setup: {str(e)}")
             return False
 
+# =========================================================================
+# 🔍 ADMIN UTILITY FUNCTIONS
+# =========================================================================
 def check_admin_exists():
     """Check if any admin account exists in the system"""
     with app.app_context():
@@ -132,6 +198,9 @@ def promote_to_admin(user_id=None, email=None, username=None):
             logger.error(f"[-] User not found")
             return False
 
+# =========================================================================
+# 🚀 MAIN EXECUTION
+# =========================================================================
 if __name__ == "__main__":
     logger.info("=" * 50)
     logger.info("CTFd Admin Setup Script - Secure Configuration")
