@@ -1,74 +1,216 @@
-{% extends "base.html" %}
+/* =========================================
+   LOGIN PAGE FIX - CTFd Default Elements
+   ========================================= */
 
-{% block content %}
-<!-- HERO SECTION YA KISHUA -->
-<div class="hero-section">
-    <div class="container">
-        <!-- Jina Rasmi la Jukwaa Lako -->
-        <h1 class="neon-glitch" data-text="IAA-CYBER-CHAMPIONS-PLATFORM-2026-GLOBAL-HUB">
-            IAA-CYBER-CHAMPIONS
-        </h1>
-        <div class="neon-subtitle">
-            GLOBAL HUB & FINTECH SECURITY ARENA
-        </div>
-        
-        <!-- Maelezo ya Mfumo na Mtengenezaji -->
-        <div class="hero-description">
-            <p class="cyber-text">
-                &gt;_ CORE_ENGINE: OPERATIONAL<br>
-                &gt;_ ARCHITECT: ENGINEER FRANK KARANI<br><br>
-                Welcome to Africa's premier gamified cybersecurity training platform. Engineered by Frank Karani specifically for the Fintech ecosystem, this platform simulates real-world financial attack vectors, banking API vulnerabilities, and infrastructure exploits. Defend systems, capture flags, and secure the future of digital finance.
-            </p>
-        </div>
+/* Login Container */
+.auth-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(13, 2, 8, 0.95);
+    border: 2px solid #00ff41;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+}
 
-        <!-- Vitufe Vya Kuingia na Kujisajili -->
-        <div class="action-buttons">
-            <a href="{{ url_for('auth.register') }}" class="btn-neon btn-neon-primary">
-                Initialize Hack <span class="btn-icon">➔</span>
-            </a>
-            <a href="{{ url_for('auth.login') }}" class="btn-neon btn-neon-secondary">
-                Access Console <span class="btn-icon">🔑</span>
-            </a>
-        </div>
-    </div>
-</div>
+/* Form Input Fields */
+.form-control {
+    background: #0d0208 !important;
+    border: 1px solid #00ff41 !important;
+    color: #00ff41 !important;
+    font-family: 'Courier New', monospace;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
 
-<!-- SEHEMU YA VIPENGELE VYA MFUMO (FEATURES) -->
-<div class="features-section container">
-    <h2 class="section-title">
-        ARENA MODULES <span class="title-accent">_</span>
-    </h2>
-    <div class="features-grid row">
-        <div class="feature-card col-md-4">
-            <div class="feature-item">
-                <div class="feature-icon">⚡ <span class="icon-pulse"></span></div>
-                <div class="feature-title">Real-World Simulations</div>
-                <div class="feature-description">
-                    Hands-on CTF challenges modeled after real-world exploits targeting mobile money layers, banking APIs, and financial node infrastructures.
-                </div>
-                <div class="feature-glow"></div>
-            </div>
-        </div>
-        <div class="feature-card col-md-4">
-            <div class="feature-item">
-                <div class="feature-icon">🛡️ <span class="icon-pulse"></span></div>
-                <div class="feature-title">Fintech Vetting Labs</div>
-                <div class="feature-description">
-                    A secure corporate framework designed for financial institutions and digital banks to train, test, and vet their security defense units.
-                </div>
-                <div class="feature-glow"></div>
-            </div>
-        </div>
-        <div class="feature-card col-md-4">
-            <div class="feature-item">
-                <div class="feature-icon">🌐 <span class="icon-pulse"></span></div>
-                <div class="feature-title">Live Telemetry Stream</div>
-                <div class="feature-description">
-                    Advanced cryptographic scoring and live dashboards tracking team standings across the central global communication hub.
-                </div>
-                <div class="feature-glow"></div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+.form-control:focus {
+    box-shadow: 0 0 15px #00ff41 !important;
+    border-color: #00ff41 !important;
+    background: #0a0305 !important;
+}
+
+.form-control::placeholder {
+    color: #00ff4133;
+    font-family: 'Courier New', monospace;
+}
+
+/* Labels */
+.form-group label,
+.form-label {
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+/* CTFd Default Buttons */
+.btn {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 25px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #00ff41 !important;
+    border: 2px solid #00ff41 !important;
+    color: #0d0208 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.btn-primary:hover {
+    background: transparent !important;
+    color: #00ff41 !important;
+    box-shadow: 0 0 20px #00ff41;
+    transform: scale(1.02);
+}
+
+.btn-secondary {
+    background: transparent !important;
+    border: 2px solid #888 !important;
+    color: #888 !important;
+}
+
+.btn-secondary:hover {
+    border-color: #00ff41 !important;
+    color: #00ff41 !important;
+    box-shadow: 0 0 10px #00ff41;
+}
+
+.btn-danger {
+    background: transparent !important;
+    border: 2px solid #ff003c !important;
+    color: #ff003c !important;
+}
+
+.btn-danger:hover {
+    background: #ff003c !important;
+    color: #0d0208 !important;
+    box-shadow: 0 0 20px #ff003c;
+}
+
+/* Login Card */
+.card {
+    background: rgba(13, 2, 8, 0.9) !important;
+    border: 1px solid #00ff41 !important;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+.card-header {
+    background: rgba(0, 20, 0, 0.8) !important;
+    border-bottom: 1px solid #00ff41 !important;
+    color: #00ff41 !important;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card-header h1, 
+.card-header h3,
+.card-header h4 {
+    color: #00ff41 !important;
+    margin: 0;
+}
+
+/* Alert Messages */
+.alert {
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.alert-info {
+    background: rgba(0, 255, 65, 0.1) !important;
+    border: 1px solid #00ff41 !important;
+    color: #00ff41 !important;
+}
+
+.alert-warning {
+    background: rgba(255, 215, 0, 0.1) !important;
+    border: 1px solid #ffd700 !important;
+    color: #ffd700 !important;
+}
+
+/* Checkbox */
+.custom-control-label {
+    color: #888;
+    font-family: 'Courier New', monospace;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #00ff41 !important;
+    border-color: #00ff41 !important;
+}
+
+/* Links */
+a {
+    color: #00ff41;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #00ff41;
+}
+
+/* Register/Login specific containers */
+.auth-form {
+    padding: 20px;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+/* Password Reset */
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.forgot-password a:hover {
+    color: #00ff41;
+}
+
+/* Validation Errors */
+.invalid-feedback {
+    color: #ff003c;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+}
+
+.form-control.is-invalid {
+    border-color: #ff003c !important;
+}
+
+/* Responsive Login */
+@media (max-width: 576px) {
+    .auth-container {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .forgot-password {
+        text-align: center;
+        margin-top: 15px;
+    }
+}
