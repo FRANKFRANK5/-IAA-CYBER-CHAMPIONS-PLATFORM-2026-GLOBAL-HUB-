@@ -1,10 +1,6 @@
-<!-- =========================================
-     CYBER FOOTER - IAA Cyber Champions
-     ========================================= -->
 <footer class="cyber-footer">
     <div class="footer-container">
         <div class="footer-row">
-            <!-- Column 1: Brand Info -->
             <div class="footer-col">
                 <div class="footer-brand">
                     <span class="brand-icon">⚡</span>
@@ -15,33 +11,30 @@
                     One Flag at a Time.
                 </p>
                 <div class="footer-social">
-                    <a href="#" class="social-link" aria-label="Twitter" target="_blank">🐦</a>
-                    <a href="#" class="social-link" aria-label="GitHub" target="_blank">📦</a>
-                    <a href="#" class="social-link" aria-label="Discord" target="_blank">💬</a>
-                    <a href="#" class="social-link" aria-label="LinkedIn" target="_blank">🔗</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">📦</a>
+                    <a href="#" class="social-link">💬</a>
+                    <a href="#" class="social-link">🔗</a>
                 </div>
             </div>
             
-            <!-- Column 2: Quick Links -->
             <div class="footer-col">
                 <h4 class="footer-title">EXPLORE</h4>
                 <ul class="footer-links">
-                    <li><a href="{{ url_for('views.challenges') }}">🏆 Challenges</a></li>
-                    <li><a href="{{ url_for('views.scoreboard_listing') }}">📊 Scoreboard</a></li>
-                    <li><a href="{{ url_for('views.teams_listing') }}">👥 Teams</a></li>
+                    <li><a href="/challenges">🏆 Challenges</a></li>
+                    <li><a href="/scoreboard">📊 Scoreboard</a></li>
+                    <li><a href="/teams">👥 Teams</a></li>
                 </ul>
             </div>
             
-            <!-- Column 3: Legal -->
             <div class="footer-col">
                 <h4 class="footer-title">LEGAL</h4>
                 <ul class="footer-links">
-                    <li><a href="{{ url_for('views.static_html', page='terms') }}">📜 Terms of Service</a></li>
-                    <li><a href="{{ url_for('views.static_html', page='privacy') }}">🔒 Privacy Policy</a></li>
+                    <li><a href="/terms">📜 Terms of Service</a></li>
+                    <li><a href="/privacy">🔒 Privacy Policy</a></li>
                 </ul>
             </div>
             
-            <!-- Column 4: System Status -->
             <div class="footer-col">
                 <h4 class="footer-title">SYSTEM</h4>
                 <div class="system-status">
@@ -57,22 +50,56 @@
             </div>
         </div>
         
-        <!-- Footer Bottom Bar -->
         <div class="footer-bottom">
             <div class="footer-copyright">
-                <span>© 2026 IAA Cyber Champions Platform - Global Fintech Security Hub</span>
+                <span>© 2026 IAA Cyber Champions Platform</span>
             </div>
             <div class="footer-engineer">
                 <span class="engineer-label">Engineered by:</span>
                 <span class="engineer-name">FRANK KARANI</span>
-                <span class="engineer-title">(Senior Cyber Security Specialist)</span>
             </div>
             <div class="footer-credits">
-                <a href="https://ctfd.io" target="_blank" class="ctfd-credit">
-                    <span>Powered by CTFd</span>
-                    <span class="engine-version">v3.7+</span>
-                </a>
+                <a href="https://ctfd.io" target="_blank" class="ctfd-credit">Powered by CTFd</a>
             </div>
         </div>
     </div>
 </footer>
+
+<style>
+.cyber-footer {
+    background: linear-gradient(180deg, #0a0505 0%, #0d0208 100%);
+    border-top: 1px solid #00ff41;
+    margin-top: 60px;
+    padding: 40px 0 20px;
+    font-family: 'Courier New', monospace;
+}
+.footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; margin-bottom: 40px; }
+.footer-col { flex: 1; min-width: 200px; }
+.footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.brand-icon { font-size: 24px; animation: pulse 2s infinite; }
+.brand-name { color: #00ff41; font-weight: bold; letter-spacing: 2px; text-shadow: 0 0 10px #00ff41; }
+.footer-tagline { color: #888; font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; }
+.footer-social { display: flex; gap: 15px; }
+.social-link { color: #00ff41; text-decoration: none; font-size: 20px; transition: .3s; opacity: 0.7; }
+.social-link:hover { opacity: 1; transform: translateY(-3px); text-shadow: 0 0 10px #00ff41; }
+.footer-title { color: #00ff41; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 15px; border-left: 2px solid #00ff41; padding-left: 10px; }
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 8px; }
+.footer-links a { color: #888; text-decoration: none; font-size: 0.85rem; transition: .3s; }
+.footer-links a:hover { color: #00ff41; transform: translateX(5px); text-shadow: 0 0 5px #00ff41; }
+.system-status { display: flex; flex-direction: column; gap: 10px; }
+.status-item { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+.status-dot { width: 8px; height: 8px; background: #ff003c; border-radius: 50%; display: inline-block; }
+.status-dot.online { background: #00ff41; box-shadow: 0 0 5px #00ff41; animation: pulse-green 2s infinite; }
+@keyframes pulse-green { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.status-text { color: #888; }
+.footer-bottom { border-top: 1px solid rgba(0, 255, 65, 0.2); padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; font-size: 0.75rem; }
+.footer-copyright { color: #666; }
+.engineer-label { color: #666; }
+.engineer-name { color: #00ff41; font-weight: bold; }
+.ctfd-credit { color: #666; text-decoration: none; }
+.ctfd-credit:hover { color: #00ff41; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@media (max-width: 768px) { .footer-row { flex-direction: column; gap: 30px; } .footer-bottom { flex-direction: column; text-align: center; } }
+</style>
