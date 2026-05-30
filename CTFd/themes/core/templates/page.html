@@ -1,38 +1,74 @@
-/* Zingatia watumiaji wanaopenda mwendo mdogo */
-@media (prefers-reduced-motion: reduce) {
-  .neon-glitch,
-  .neon-glitch::before,
-  .neon-glitch::after,
-  .title-accent,
-  .icon-pulse,
-  .feature-glow,
-  .btn-neon,
-  .btn-neon .btn-icon {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
+{% extends "base.html" %}
 
-  .neon-glitch::before,
-  .neon-glitch::after {
-    display: none; /* Ficha glitch ikiwa mwendo umepunguzwa */
-  }
+{% block content %}
+<!-- HERO SECTION YA KISHUA -->
+<div class="hero-section">
+    <div class="container">
+        <!-- Jina Rasmi la Jukwaa Lako -->
+        <h1 class="neon-glitch" data-text="IAA-CYBER-CHAMPIONS-PLATFORM-2026-GLOBAL-HUB">
+            IAA-CYBER-CHAMPIONS
+        </h1>
+        <div class="neon-subtitle">
+            GLOBAL HUB & FINTECH SECURITY ARENA
+        </div>
+        
+        <!-- Maelezo ya Mfumo na Mtengenezaji -->
+        <div class="hero-description">
+            <p class="cyber-text">
+                &gt;_ CORE_ENGINE: OPERATIONAL<br>
+                &gt;_ ARCHITECT: ENGINEER FRANK KARANI<br><br>
+                Welcome to Africa's premier gamified cybersecurity training platform. Engineered by Frank Karani specifically for the Fintech ecosystem, this platform simulates real-world financial attack vectors, banking API vulnerabilities, and infrastructure exploits. Defend systems, capture flags, and secure the future of digital finance.
+            </p>
+        </div>
 
-  .feature-item:hover {
-    transform: none !important;
-  }
-}
+        <!-- Vitufe Vya Kuingia na Kujisajili -->
+        <div class="action-buttons">
+            <a href="{{ url_for('auth.register') }}" class="btn-neon btn-neon-primary">
+                Initialize Hack <span class="btn-icon">➔</span>
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="btn-neon btn-neon-secondary">
+                Access Console <span class="btn-icon">🔑</span>
+            </a>
+        </div>
+    </div>
+</div>
 
-/* Hakikisha focus inaonekana kwa keyboard navigation */
-.btn-neon:focus-visible,
-a:focus-visible {
-  outline: 3px solid #ffd700;
-  outline-offset: 4px;
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-}
-
-/* Kuboresha usomaji wa maandishi kwenye feature cards */
-.feature-description {
-  color: #b0ffb0; /* Rangi angavu kidogo kuliko #888 */
-}
+<!-- SEHEMU YA VIPENGELE VYA MFUMO (FEATURES) -->
+<div class="features-section container">
+    <h2 class="section-title">
+        ARENA MODULES <span class="title-accent">_</span>
+    </h2>
+    <div class="features-grid row">
+        <div class="feature-card col-md-4">
+            <div class="feature-item">
+                <div class="feature-icon">⚡ <span class="icon-pulse"></span></div>
+                <div class="feature-title">Real-World Simulations</div>
+                <div class="feature-description">
+                    Hands-on CTF challenges modeled after real-world exploits targeting mobile money layers, banking APIs, and financial node infrastructures.
+                </div>
+                <div class="feature-glow"></div>
+            </div>
+        </div>
+        <div class="feature-card col-md-4">
+            <div class="feature-item">
+                <div class="feature-icon">🛡️ <span class="icon-pulse"></span></div>
+                <div class="feature-title">Fintech Vetting Labs</div>
+                <div class="feature-description">
+                    A secure corporate framework designed for financial institutions and digital banks to train, test, and vet their security defense units.
+                </div>
+                <div class="feature-glow"></div>
+            </div>
+        </div>
+        <div class="feature-card col-md-4">
+            <div class="feature-item">
+                <div class="feature-icon">🌐 <span class="icon-pulse"></span></div>
+                <div class="feature-title">Live Telemetry Stream</div>
+                <div class="feature-description">
+                    Advanced cryptographic scoring and live dashboards tracking team standings across the central global communication hub.
+                </div>
+                <div class="feature-glow"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
