@@ -14,8 +14,8 @@
                     <a class="nav-link" href="/" style="color: #ffffff;">🏠 HOME</a>
                 </li>
                 
-                <!-- IMPORTANT: CTFd native authentication check -->
-                {% if get_current_user().is_authenticated %}
+                <!-- USE SESSION - NOT get_current_user() -->
+                {% if session.get('user_id') %}
                     <!-- Logged in user -->
                     <li class="nav-item">
                         <a class="nav-link" href="/challenges" style="color: #ffffff;">⚔️ CHALLENGES</a>
@@ -27,8 +27,8 @@
                         <a class="nav-link" href="/teams" style="color: #ffffff;">👥 TEAMS</a>
                     </li>
                     
-                    <!-- Admin panel - only for admins -->
-                    {% if get_current_user().type == 'admin' %}
+                    <!-- Admin panel check using session -->
+                    {% if session.get('admin') or session.get('type') == 'admin' %}
                     <li class="nav-item">
                         <a class="nav-link" href="/admin" style="color: #ff003c; text-shadow: 0 0 5px #ff003c; font-weight: bold;">👑 ADMIN</a>
                     </li>
@@ -37,11 +37,11 @@
                     <!-- User dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="color: #00ff41; font-weight: bold;">
-                            👤 {{ get_current_user().name }}
+                            👤 {{ session.get('user_name', 'Account') }}
                         </a>
                         <div class="dropdown-menu" style="background: #0d0208; border: 1px solid #00ff41;">
-                            <a class="dropdown-item" href="/profile" style="color: #ffffff;">📋 Profile</a>
-                            <a class="dropdown-item" href="/settings" style="color: #ffffff;">⚙️ Settings</a>
+                            <a class="dropdown-item" href="/profile">📋 Profile</a>
+                            <a class="dropdown-item" href="/settings">⚙️ Settings</a>
                             <div class="dropdown-divider" style="border-color: #00ff41;"></div>
                             <a class="dropdown-item" href="/logout" style="color: #ff003c;">🚪 Logout</a>
                         </div>
@@ -73,6 +73,7 @@
     .nav-link { 
         transition: all 0.3s ease; 
         margin: 0 5px;
+        font-weight: 500;
     }
     
     .nav-link:hover { 
@@ -97,5 +98,9 @@
         transform: translateX(5px); 
         background: rgba(0, 255, 65, 0.1) !important;
         color: #00ff41 !important;
+    }
+    
+    .dropdown-divider {
+        border-color: #00ff41;
     }
 </style>
