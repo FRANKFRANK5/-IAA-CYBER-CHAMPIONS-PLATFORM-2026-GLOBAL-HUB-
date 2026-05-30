@@ -1,0 +1,78 @@
+<!-- =========================================
+     CYBER FOOTER - IAA Cyber Champions
+     ========================================= -->
+<footer class="cyber-footer">
+    <div class="footer-container">
+        <div class="footer-row">
+            <!-- Column 1: Brand Info -->
+            <div class="footer-col">
+                <div class="footer-brand">
+                    <span class="brand-icon">⚡</span>
+                    <span class="brand-name">IAA CYBER CHAMPIONS</span>
+                </div>
+                <p class="footer-tagline">
+                    Securing Africa's Fintech Future<br>
+                    One Flag at a Time.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Twitter" target="_blank">🐦</a>
+                    <a href="#" class="social-link" aria-label="GitHub" target="_blank">📦</a>
+                    <a href="#" class="social-link" aria-label="Discord" target="_blank">💬</a>
+                    <a href="#" class="social-link" aria-label="LinkedIn" target="_blank">🔗</a>
+                </div>
+            </div>
+            
+            <!-- Column 2: Quick Links -->
+            <div class="footer-col">
+                <h4 class="footer-title">EXPLORE</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('views.challenges') }}">🏆 Challenges</a></li>
+                    <li><a href="{{ url_for('views.scoreboard_listing') }}">📊 Scoreboard</a></li>
+                    <li><a href="{{ url_for('views.teams_listing') }}">👥 Teams</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 3: Legal -->
+            <div class="footer-col">
+                <h4 class="footer-title">LEGAL</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('views.static_html', page='terms') }}">📜 Terms of Service</a></li>
+                    <li><a href="{{ url_for('views.static_html', page='privacy') }}">🔒 Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 4: System Status -->
+            <div class="footer-col">
+                <h4 class="footer-title">SYSTEM</h4>
+                <div class="system-status">
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        <span class="status-text">Platform: Operational</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot"></span>
+                        <span class="status-text">CTF Version: 2026.1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                <span>© 2026 IAA Cyber Champions Platform - Global Fintech Security Hub</span>
+            </div>
+            <div class="footer-engineer">
+                <span class="engineer-label">Engineered by:</span>
+                <span class="engineer-name">FRANK KARANI</span>
+                <span class="engineer-title">(Senior Cyber Security Specialist)</span>
+            </div>
+            <div class="footer-credits">
+                <a href="https://ctfd.io" target="_blank" class="ctfd-credit">
+                    <span>Powered by CTFd</span>
+                    <span class="engine-version">v3.7+</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
