@@ -10,13 +10,27 @@
         
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav ml-auto">
+                <!-- HOME - Always visible -->
                 <li class="nav-item">
                     <a class="nav-link" href="/" style="color: #ffffff;">🏠 HOME</a>
                 </li>
                 
-                <!-- USE SESSION - NOT get_current_user() -->
+                <!-- ========================================= -->
+                <!-- FOR NON-LOGGED IN USERS (Wageni) -->
+                <!-- ========================================= -->
+                {% if not session.get('user_id') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register" style="color: #00ff41;">📝 REGISTER</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login" style="color: #00ff41;">🔐 LOGIN</a>
+                    </li>
+                {% endif %}
+                
+                <!-- ========================================= -->
+                <!-- FOR LOGGED IN USERS (Wanachama) -->
+                <!-- ========================================= -->
                 {% if session.get('user_id') %}
-                    <!-- Logged in user -->
                     <li class="nav-item">
                         <a class="nav-link" href="/challenges" style="color: #ffffff;">⚔️ CHALLENGES</a>
                     </li>
@@ -27,32 +41,30 @@
                         <a class="nav-link" href="/teams" style="color: #ffffff;">👥 TEAMS</a>
                     </li>
                     
-                    <!-- Admin panel check using session -->
-                    {% if session.get('admin') or session.get('type') == 'admin' %}
+                    <!-- ========================================= -->
+                    <!-- ADMIN PANEL - ONLY FOR ADMIN USERS -->
+                    <!-- ========================================= -->
+                    {% if session.get('type') == 'admin' %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin" style="color: #ff003c; text-shadow: 0 0 5px #ff003c; font-weight: bold;">👑 ADMIN</a>
+                        <a class="nav-link" href="/admin" style="color: #ff003c; text-shadow: 0 0 5px #ff003c; font-weight: bold;">👑 ADMIN PANEL</a>
                     </li>
                     {% endif %}
                     
-                    <!-- User dropdown -->
+                    <!-- User Dropdown Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="color: #00ff41; font-weight: bold;">
-                            👤 {{ session.get('user_name', 'Account') }}
+                            👤 {{ session.get('name', 'Account') }}
                         </a>
                         <div class="dropdown-menu" style="background: #0d0208; border: 1px solid #00ff41;">
-                            <a class="dropdown-item" href="/profile">📋 Profile</a>
+                            <a class="dropdown-item" href="/profile">📋 My Profile</a>
                             <a class="dropdown-item" href="/settings">⚙️ Settings</a>
+                            {% if session.get('type') == 'admin' %}
+                            <a class="dropdown-item" href="/admin/config">🔧 System Config</a>
+                            <a class="dropdown-item" href="/admin/statistics">📈 Statistics</a>
+                            {% endif %}
                             <div class="dropdown-divider" style="border-color: #00ff41;"></div>
                             <a class="dropdown-item" href="/logout" style="color: #ff003c;">🚪 Logout</a>
                         </div>
-                    </li>
-                {% else %}
-                    <!-- Not logged in -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register" style="color: #00ff41; font-weight: bold;">📝 REGISTER</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login" style="color: #00ff41; font-weight: bold;">🔐 LOGIN</a>
                     </li>
                 {% endif %}
             </ul>
