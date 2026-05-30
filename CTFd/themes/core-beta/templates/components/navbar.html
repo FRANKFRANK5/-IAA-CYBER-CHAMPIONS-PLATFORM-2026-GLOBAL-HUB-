@@ -1,211 +1,94 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a href="{{ url_for('views.static_html', route='/') }}" class="navbar-brand">
-      {% if Configs.ctf_logo %}
-        <img
-            class="img-responsive ctf_logo"
-            src="{{ url_for('views.files', path=Configs.ctf_logo) }}"
-            alt="{{ Configs.ctf_name }}"
-            height="25"
-        >
-      {% else %}
-        {{ Configs.ctf_name }}
-      {% endif %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208 !important; border-bottom: 2px solid #00ff41 !important; box-shadow: 0 0 15px #00ff41 !important; display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 30px !important; position: fixed !important; top: 0 !important; width: 100% !important; z-index: 1030 !important;">
+  <div class="container" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; max-width: 1200px; margin: 0 auto;">
+    
+    <!-- Brand/Logo (Wewe Admin ukiingia, hii itakuletea neno ADMIN kama fumbo safi la siri) -->
+    <a class="navbar-brand" href="/" style="color: #00ff41 !important; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold !important; letter-spacing: 2px; font-family: 'Courier New', monospace; text-decoration: none !important; font-size: 1.4rem !important;">
+        ⚡ IAA CYBER CHAMPIONS {% if is_admin() %}<span style="color: #ff003c; font-size: 0.8rem;">[ADMIN_CONSOLE]</span>{% endif %}
     </a>
 
-    <button
-        class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#base-navbars"
-        aria-controls="base-navbars" aria-expanded="false" aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="base-navbars">
-      <ul class="navbar-nav me-auto">
-        {% for page in Plugins.user_menu_pages %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ page.route }}" {% if page.link_target %}target="{{ page.link_target }}"{% endif %}>
-              {{ page.title }}
-            </a>
-          </li>
-        {% endfor %}
-
-        {% if Configs.account_visibility != 'admins' %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.listing') }}">
-              {% trans %}Users{% endtrans %}
-            </a>
-          </li>
-
-          {% if Configs.user_mode == 'teams' %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('teams.listing') }}">
-                {% trans %}Teams{% endtrans %}
-              </a>
-            </li>
-          {% endif %}
-        {% endif %}
-
-        {% if Configs.account_visibility != 'admins' and Configs.score_visibility != 'admins' %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('scoreboard.listing') }}">
-              {% trans %}Scoreboard{% endtrans %}
-            </a>
-          </li>
-        {% endif %}
-
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('challenges.listing') }}">
-            {% trans %}Challenges{% endtrans %}
+    <!-- Navbar Links -->
+    <div id="navbarContent">
+      <ul style="list-style: none !important; display: flex !important; gap: 25px !important; margin: 0 !important; padding: 0 !important; flex-direction: row !important; align-items: center !important;">
+        
+        <li style="list-style: none !important; display: inline-block !important;">
+          <a href="/" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+            🏠 HOME
           </a>
         </li>
-      </ul>
 
-      <hr class="d-sm-flex d-md-flex d-lg-none">
-
-      <ul class="navbar-nav ms-md-auto d-block d-sm-flex d-md-flex">
-        {% if authed() %}
-
-          {% if is_admin() %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin.view') }}">
-                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Admin Panel{% endtrans %}">
-                    <i class="fas fa-wrench d-none d-md-inline d-lg-none"></i>
-                </span>
-                <span class="d-sm-inline d-md-none d-lg-inline">
-                  <i class="fas fa-wrench pe-1"></i>
-                  {% trans %}Admin Panel{% endtrans %}
-                </span>
-              </a>
-            </li>
-          {% endif %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('views.notifications') }}">
-              <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Notifications{% endtrans %}">
-                <i class="fas fa-bell d-none d-md-inline d-lg-none"></i>
-              </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                  <i class="fas fa-bell pe-1"></i>
-                  <span x-data x-show="$store.unread_count > 0" x-text="$store.unread_count" class="badge rounded-pill bg-danger badge-notification"></span>
-                  {% trans %}Notifications{% endtrans %}
-              </span>
-            </a>
-          </li>
-
-          {% if Configs.user_mode == "teams" %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('teams.private') }}">
-                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Team{% endtrans %}">
-                  <i class="fas fa-users d-none d-md-inline d-lg-none"></i>
-                </span>
-                <span class="d-sm-inline d-md-none d-lg-inline">
-                  <i class="fas fa-users pe-1"></i>
-                  {% trans %}Team{% endtrans %}
-                </span>
-              </a>
-            </li>
-          {% endif %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.private') }}">
-              <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Profile{% endtrans %}">
-                <i class="fas fa-user-circle d-none d-md-inline d-lg-none"></i>
-              </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                <i class="fas fa-user-circle pe-1"></i>
-                {% trans %}Profile{% endtrans %}
-              </span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('views.settings') }}">
-              <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Settings{% endtrans %}">
-                <i class="fas fa-cogs d-none d-md-inline d-lg-none"></i>
-              </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                <i class="fas fa-cogs pe-1"></i>
-                {% trans %}Settings{% endtrans %}
-              </span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}">
-              <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Logout{% endtrans %}">
-                <i class="fas fa-sign-out-alt d-none d-md-inline d-lg-none"></i>
-              </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                <i class="fas fa-sign-out-alt pe-1"></i><span class="d-lg-none">
-                  {% trans %}Logout{% endtrans %}
-                </span>
-              </span>
-            </a>
-          </li>
-        {% else %}
-
+        <!-- 🔐 1. NJIA SAHIHI YA CTFD: KWA AJILI YA WATUMIAJI AMBAO HAJAINGIA (ANONYMOUS) -->
+        {% if not authed() %}
           {% if registration_visible() %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth.register') }}">
-                <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Register{% endtrans %}">
-                  <i class="fas fa-user-plus d-none d-md-inline d-lg-none"></i>
-                </span>
-                <span class="d-sm-inline d-md-none d-lg-inline">
-                  <i class="fas fa-user-plus pe-1"></i>
-                  {% trans %}Register{% endtrans %}
-                </span>
+            <li style="list-style: none !important; display: inline-block !important;">
+              <a href="/register" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                📝 REGISTER
               </a>
             </li>
           {% endif %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.login') }}">
-              <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Login{% endtrans %}">
-                <i class="fas fa-sign-in-alt d-none d-md-inline d-lg-none"></i>
-              </span>
-              <span class="d-sm-inline d-md-none d-lg-inline">
-                <i class="fas fa-sign-in-alt pe-1"></i>
-                {% trans %}Login{% endtrans %}
-              </span>
+          <li style="list-style: none !important; display: inline-block !important;">
+            <a href="/login" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+              🔐 LOGIN
             </a>
           </li>
         {% endif %}
 
-        <li class="nav-item dropdown">
-          <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-language d-none d-md-inline"></i>
-            <span class="d-sm-inline d-md-none">
-              <i class="fas fa-language pe-1"></i>
-              {% trans %}Change language{% endtrans %}
-            </span>
-          </button>
-          <form x-data="LanguageForm">
-            <ul class="dropdown-menu dropdown-menu-end">
-              {% set curr_lang = get_locale() %}
-              {%- for lang in Languages.names.items() %}
-              <li>
-                  <span class="dropdown-item {{ 'bg-primary text-white' if (curr_lang == lang[0]) }}" @click="set" value="{{ lang[0] }}">
-                    {{ lang[1] }}
-                  </span>
-              </li>
-              {%- endfor %}
-            </ul>
-          </form>
-        </li>
+        <!-- ⚔️ 2. NJIA SAHIHI YA CTFD: KWA AJILI YA WALIOINGIA MTANDAONI (AUTHENTICATED USERS) -->
+        {% if authed() %}
+          <li style="list-style: none !important; display: inline-block !important;">
+            <a href="/challenges" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+              ⚔️ CHALLENGES
+            </a>
+          </li>
+          <li style="list-style: none !important; display: inline-block !important;">
+            <a href="/scoreboard" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+              📊 SCOREBOARD
+            </a>
+          </li>
+          <li style="list-style: none !important; display: inline-block !important;">
+            <a href="/users" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+              👥 USERS
+            </a>
+          </li>
 
-        <li class="nav-item">
-          <button class="nav-link theme-switch" type="button">
-            <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Toggle theme{% endtrans %}">
-              <i class="fas fa-sun d-none d-md-inline"></i>
-            </span>
-            <span class="d-sm-inline d-md-none">
-              <i class="fas fa-sun pe-1"></i>
-              {% trans %}Toggle theme{% endtrans %}
-            </span>
-          </button>
-        </li>
+          <!-- 👑 KITUFE CHA ADMIN PANEL (Kinaonekana kwako tu ukiwa kama Msimamizi Mkuu) -->
+          {% if is_admin() %}
+            <li style="list-style: none !important; display: inline-block !important;">
+              <a href="/admin" style="color: #ff003c !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important; text-shadow: 0 0 5px #ff003c;" onmouseover="this.style.color='#fff'; this.style.textShadow='0 0 10px #ff003c'" onmouseout="this.style.color='#ff003c'; this.style.textShadow='0 0 5px #ff003c'">
+                ⚙️ ADMIN Panel
+              </a>
+            </li>
+          {% endif %}
+
+          <!-- 🚪 KITUFE CHA LOGOUT -->
+          <li style="list-style: none !important; display: inline-block !important;">
+            <a href="/logout" style="color: #ff003c !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#fff'; this.style.textShadow='0 0 5px #ff003c'" onmouseout="this.style.color='#ff003c'; this.style.textShadow='none'">
+              🚪 LOGOUT
+            </a>
+          </li>
+        {% endif %}
+
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Spacing and Layout Override -->
+<style>
+  body {
+    padding-top: 90px !important;
+    background-color: #0d0208 !important;
+  }
+  .navbar-brand {
+    animation: neonPulse 2s infinite;
+  }
+  @keyframes neonPulse {
+    0%, 100% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; }
+    50% { text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
+  }
+  ul, li {
+    list-style: none !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
