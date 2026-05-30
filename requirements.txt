@@ -186,6 +186,9 @@ zope-event==4.5.0
     # via gevent
 zope-interface==5.2.0
     # via gevent
+Flask-Limiter==3.5.0
+limits==3.13.0
+ordered-set==4.1.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
